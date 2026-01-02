@@ -23,10 +23,10 @@ public class HinhAnh {
     @Column(name = "ten_hinh_anh", length = 256)
     private String tenHinhAnh;
     @Column(name = "icon")
-    private boolean icon;
+    private Boolean icon;
     @Column(name = "duong_dan")
     private String duongDan;
-    @Column(name = "du_lieu_lon")
+    @Column(name = "du_lieu_lon", columnDefinition = "LONGTEXT")
     @Lob
     private String duLieuAnh;
 
