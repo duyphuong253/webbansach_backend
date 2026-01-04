@@ -51,7 +51,7 @@ public class NguoiDung {
                         CascadeType.PERSIST, CascadeType.MERGE,
                         CascadeType.DETACH, CascadeType.REFRESH, })
         private List<SachYeuThich> danSachYeuThich;
-        @ManyToMany(fetch = FetchType.LAZY, cascade = {
+        @ManyToMany(fetch = FetchType.EAGER, cascade = {
                         CascadeType.PERSIST, CascadeType.MERGE,
                         CascadeType.DETACH, CascadeType.REFRESH
         })
