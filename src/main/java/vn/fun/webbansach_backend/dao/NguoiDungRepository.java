@@ -1,5 +1,7 @@
 package vn.fun.webbansach_backend.dao;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -11,7 +13,7 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, Integer> {
 
     public boolean existsByEmail(String email);
 
-    public NguoiDung findByTenDangNhap(String tenDangNhap);
+    Optional<NguoiDung> findByTenDangNhap(String tenDangNhap);
 
-    public NguoiDung findByEmail(String email);
+    Optional<NguoiDung> findByEmail(String email);
 }

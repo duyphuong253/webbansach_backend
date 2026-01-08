@@ -2,6 +2,7 @@ package vn.fun.webbansach_backend.service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -85,24 +86,26 @@ public class TaiKhoanService {
     }
 
     public ResponseEntity<?> kichHoatTaiKhoan(String email, String maKichHoat) {
-        NguoiDung nguoiDung = nguoiDungRepository.findByEmail(email);
 
-        if (nguoiDung == null) {
-            return ResponseEntity.badRequest().body(new ThongBao("Người dùng không tồn tại!"));
-
-        }
+        NguoiDung nguoiDung = nguoiDungRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Người dùng không tồn tại!"));
 
         if (nguoiDung.isDaKichHoat()) {
-            return ResponseEntity.badRequest().body(new ThongBao("Tài khoản đã được kích hoạt!"));
-
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ThongBao("Tài khoản đã được kích hoạt!"));
         }
 
-        if (maKichHoat.equals(nguoiDung.getMaKichHoat())) {
-            nguoiDung.setDaKichHoat(true);
-            nguoiDungRepository.save(nguoiDung);
-            return ResponseEntity.ok("Kích hoạt tài khoản thành công!");
-        } else {
-            return ResponseEntity.badRequest().body(new ThongBao("Mã kích hoạt không chính xác!"));
+        if (!maKichHoat.equals(nguoiDung.getMaKichHoat())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new ThongBao("Mã kích hoạt không chính xác!"));
         }
+
+        nguoiDung.setDaKichHoat(true);
+        nguoiDungRepository.save(nguoiDung);
+
+        return ResponseEntity.ok(new ThongBao("Kích hoạt tài khoản thành công!"));
     }
+
 }

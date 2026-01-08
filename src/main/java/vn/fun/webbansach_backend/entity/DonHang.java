@@ -6,7 +6,6 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,15 +31,13 @@ public class DonHang {
         private String diaChiNhanHang;
         @Column(name = "tong_tien")
         private double tongTien;
-        @OneToMany(mappedBy = "donHang", fetch = FetchType.LAZY, cascade = {
-                        CascadeType.PERSIST, CascadeType.MERGE,
-                        CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE })
+        @OneToMany(mappedBy = "donHang", cascade = CascadeType.ALL, orphanRemoval = true)
         private List<ChiTietDonHang> danhSachChiTietDonHang;
-        @ManyToOne(cascade = {
-                        CascadeType.PERSIST, CascadeType.MERGE,
-                        CascadeType.DETACH, CascadeType.REFRESH })
+
+        @ManyToOne(cascade = { CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH })
         @JoinColumn(name = "ma_nguoi_dung", nullable = false)
         private NguoiDung nguoiDung;
+
         @Column(name = "chi_phi_giao_hang")
         private double chiPhiGiaoHang;
         @Column(name = "chi_phi_thanh_toan")

@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -46,6 +47,9 @@ public class NguoiDung {
         private boolean daKichHoat;
         @Column(name = "ma_kich_hoat")
         private String maKichHoat;
+        @Column(name = "avatar", columnDefinition = "LONGTEXT")
+        @Lob
+        private String avatar;
 
         @OneToMany(mappedBy = "nguoiDung", fetch = FetchType.LAZY, cascade = {
                         CascadeType.PERSIST, CascadeType.MERGE,
